@@ -1,17 +1,33 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+import StartPage from './StartPage';
+import "./style.css"
+import { BrowserRouter } from "react-router-dom";
 import App from './App';
-import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+
+fetch("/user/id")
+    .then((res) => res.json())
+    .then((data) => {
+        console.log("data in fetch at index.js: ", data);
+
+        if (!data.userId) {
+     root.render(
+         <React.StrictMode>
+             <BrowserRouter>
+                 <StartPage />
+             </BrowserRouter>
+         </React.StrictMode>
+     );
+        } else {
+root.render(
+    <React.StrictMode>
+        <BrowserRouter>
+            <App />
+        </BrowserRouter>
+    </React.StrictMode>
+);
+        }
+    });

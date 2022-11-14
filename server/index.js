@@ -7,7 +7,7 @@ const bcrypt = require("bcryptjs");
 app.use(express.json());
 
 const { authenticate } = require("../functions");
-const { insertUser, findUserByEmail } = require("../db");
+const { insertUser, findUserByEmail, createBasicToDoList, getBasicToDos, addBasicToDo, getToDoLists } = require("../db");
 
 app.use(
     cookieSession({
@@ -142,6 +142,49 @@ app.get("/logout", (req, res) => {
         success: true,
     });
 });
+
+/////////////////////////////// To-Do Lists: /////////////////////////////////////
+
+app.get("/getToDoLists", function (req, res) {
+
+    getToDoLists(req.session.userId)
+    .then((toDoLists) => {
+
+        console.log("toDoLists in /getToDoLists: ", toDoLists);
+
+        if (toDoLists.length > 0) {
+            res.json({
+                success: true,
+                toDoLists
+            });
+            return
+        } 
+        res.json({
+            success: false
+        });
+
+    });
+
+});
+
+app.post("/createBasicToDoList", function (req, res) {
+
+    createBasicToDoList(req.session.userId, req.body.basictodolist_name)
+    .then(
+        (data) => {
+            console.log("data in /createBasicToDoList: ", data);
+
+            let newToDoList = data[0];
+
+            res.json({
+                success: true,
+                newToDoList
+            });
+        }
+    );
+});
+
+
 
 ////////////////////////////////////////////////////////////////////
 app.listen(PORT, () => {

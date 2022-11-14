@@ -11,12 +11,13 @@ export default function App() {
       <div className="app">
           <header className="appHeader">
               <div>Profile</div>
+              <h1> GET SHIT DONE. </h1>
               <Logout />
           </header>
           <hr />
 
           <Route exact path="/">
-           <AppMain />
+              <AppMain />
           </Route>
 
           <Route exact path="/pomodoro">
@@ -26,6 +27,11 @@ export default function App() {
           <Route exact path="/todolists">
               <ToDoLists />
           </Route>
+
+          <footer>
+              <hr />
+              &copy; Lennard learns Web-Development @SPICED{" "}
+          </footer>
       </div>
   );
 }

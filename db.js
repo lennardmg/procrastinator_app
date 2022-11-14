@@ -25,10 +25,50 @@ module.exports.findUserByEmail = function (email) {
 };
 
 
-module.exports.getBasicToDos = function (email) {
+/////////////////////////////////////////////////////////////////////////////////////////
+
+module.exports.createBasicToDoList = function (creator_id, basictodolist_name) {
     const sql = `
-        SELECT * FROM basictodo WHERE email= $1;
+        INSERT INTO basictodos (creator_id, basictodolist_name) VALUES ($1, $2)
+        RETURNING *;
     `;
-    return db.query(sql, [email]).then((result) => result.rows);
+    return db
+        .query(sql, [creator_id, basictodolist_name])
+        .then((result) => result.rows)
+        .catch((err) => {console.log("error in createBasicToDoList: ", err)});
 };
 
+// here still needs to be included the JOIN for the advanced To-Do lists table
+module.exports.getToDoLists = function (creator_id) {
+    const sql = `
+        SELECT * FROM basictodos WHERE creator_id = $1
+        ORDER BY created_at DESC;
+    `;
+    return db
+        .query(sql, [creator_id])
+        .then((result) => result.rows)
+        .catch((err) => {console.log("error in getToDoLists: ", err)});
+};
+
+module.exports.getBasicToDos = function (creator_id, basictodolist_name) {
+    const sql = `
+        SELECT * FROM basictodos WHERE (creator_id = $1 AND basictodolist_name = $2);
+    `;
+    return db
+        .query(sql, [creator_id, basictodolist_name])
+        .then((result) => result.rows)
+        .catch((err) => {console.log("error in getBasicToDos: ", err)});
+};
+
+module.exports.addBasicToDo = function (todo_name, creator_id, basictodolist_name) {
+    const sql = `
+        INSERT INTO basictodos (todo_name) VALUES ($1)
+        WHERE (creator_id = $2 AND basictodolist_name = $3);
+    `;
+    return db
+    .query(sql, [todo_name, creator_id, basictodolist_name])
+    .then((result) => result.rows)
+    .catch((err) => {console.log("error in addBasicToDo: ", err);});
+};
+
+/////////////////////////////////////////////////////////////////////////////////////////

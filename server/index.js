@@ -101,13 +101,16 @@ app.post("/login", (req, res) => {
 
             authenticate(password, user[0].password)
                 .then((result) => {
+
                     if (result == true) {
                         req.session.userId = userInfo.id;
                         res.json({
                             success: true,
                             message: "LogIn successful",
                         });
+                        return
                     }
+
                     res.json({
                         success: false,
                         message: "*sorry, something went wrong ...",
@@ -131,6 +134,13 @@ app.post("/login", (req, res) => {
                 message: "*sorry, something went wrong ...",
             });
         });
+});
+
+app.get("/logout", (req, res) => {
+    req.session = null;
+    res.json({
+        success: true,
+    });
 });
 
 ////////////////////////////////////////////////////////////////////

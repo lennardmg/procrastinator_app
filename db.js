@@ -24,3 +24,11 @@ module.exports.findUserByEmail = function (email) {
         .then((result) => result.rows);
 };
 
+
+module.exports.getBasicToDos = function (email) {
+    const sql = `
+        SELECT * FROM basictodo WHERE email= $1;
+    `;
+    return db.query(sql, [email]).then((result) => result.rows);
+};
+

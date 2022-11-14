@@ -2,7 +2,7 @@ import React from 'react'
 import { useState } from "react";
 import { useHistory } from "react-router-dom";
 
-export default function Register() {
+export default function Register({ togglePopUpRegister }) {
     const [firstname, setFirstname] = useState("");
     const [lastname, setLastname] = useState("");
     const [email, setEmail] = useState("");
@@ -52,79 +52,83 @@ export default function Register() {
                     }
                 });
         }
-    }
+    };
 
-  return (
-      <div>
-          <div className="inputFlex">
-              <h2>Sign Up here:</h2>
-              <form
-                  action=""
-                  className="inputForm"
-                  onSubmit={submitRegistrationForm}
-              >
-                  <span style={{ color: "red" }}>{message}</span>
+    return (
+        <div>
+            <div className="inputFlex">
+                <div className="inputHeader">
+                    <p
+                        className="closeButton"
+                        onClick={() => togglePopUpRegister()}
+                    >
+                        x
+                    </p>
+                    <h2>Sign Up here:</h2>
+                </div>
+                
+                <form
+                    action=""
+                    className="inputForm"
+                    onSubmit={submitRegistrationForm}
+                >
+                    <span style={{ color: "red" }}>{message}</span>
 
-                  <div>
-                      <label htmlFor="firstname" className="">
-                          First Name
-                      </label>
-                      <input
-                          type="text"
-                          pattern="[\p{Letter}\-' ßñÄÖÜäüöæÆÅåØø]+"
-                          name="firstname"
-                          id="firstname"
-                          required
-                          onChange={(e) => setFirstname(e.target.value)}
-                      />
-                  </div>
+                        <label htmlFor="firstname" className="">
+                            First Name
+                        </label>
+                        <input
+                            type="text"
+                            pattern="[\p{Letter}\-' ßñÄÖÜäüöæÆÅåØø]+"
+                            name="firstname"
+                            id="firstname"
+                            required
+                            onChange={(e) => setFirstname(e.target.value)}
+                        />
 
-                  <div>
-                      <label htmlFor="lastname" className="">
-                          Last Name
-                      </label>
-                      <input
-                          type="text"
-                          pattern="[\p{Letter}\-' ßñÄÖÜäüöæÆÅåØø]+"
-                          name="lastname"
-                          id="lastname"
-                          required
-                          onChange={(e) => setLastname(e.target.value)}
-                      />
-                  </div>
+                        <label htmlFor="lastname" className="">
+                            Last Name
+                        </label>
+                        <input
+                            type="text"
+                            pattern="[\p{Letter}\-' ßñÄÖÜäüöæÆÅåØø]+"
+                            name="lastname"
+                            id="lastname"
+                            required
+                            onChange={(e) => setLastname(e.target.value)}
+                        />
 
-                  <div>
-                      <label htmlFor="email" className="">
-                          Email
-                      </label>
-                      <input
-                          type="email"
-                          pattern="[A-Za-z0-9._%+-ßöäü]+@[a-z0-9.-ßöäü]+\.[a-z]{2,}$"
-                          name="email"
-                          id="email"
-                          required
-                          onChange={(e) => setEmail(e.target.value)}
-                      />
-                  </div>
 
-                  <div>
-                      <label htmlFor="password" className="">
-                          Password
-                      </label>
-                      <input
-                          type="password"
-                          name="password"
-                          id="password"
-                          required
-                          onChange={(e) => setPassword(e.target.value)}
-                      />
-                  </div>
+                        <label htmlFor="email" className="">
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            pattern="[A-Za-z0-9._%+-ßöäü]+@[a-z0-9.-ßöäü]+\.[a-z]{2,}$"
+                            name="email"
+                            id="email"
+                            required
+                            onChange={(e) => setEmail(e.target.value)}
+                        />
 
-                  <div>
-                      <button>Register</button>
-                  </div>
-              </form>
-          </div>
-      </div>
-  );
+
+                        <label htmlFor="password" className="">
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            name="password"
+                            id="password"
+                            required
+                            onChange={(e) => setPassword(e.target.value)}
+                        />
+               
+
+                    <div>
+                        <button>Register</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    );
 }

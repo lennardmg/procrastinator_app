@@ -13,7 +13,7 @@ h1, h2, h3, h4 {
     background-position: center;
     background-repeat: no-repeat;
     background-attachment: scroll;
-    background-size:cover;
+    background-size: cover;
 }
 
 footer {
@@ -22,6 +22,8 @@ footer {
 	font-size: 15px;
 	font-weight: bold;
   color: white;
+  text-shadow: 5px 5px 8px #010610;
+  margin: 2px;
 }
 
 .appHeader {
@@ -30,9 +32,19 @@ footer {
     justify-content:space-between;
 }
 
+.leftAppHeader {
+    display: flex;
+    flex-direction: row;
+    justify-content:flex-start;
+    align-items: center;
+    color: white;
+    text-shadow: 5px 5px 8px #010610;
+}
+
 .appHeader h1 {
   margin-top: 10px;
-  color: darkgray;
+  color: white;
+  text-shadow: 5px 5px 8px #010610;
 }
 
 .logOutField {
@@ -146,7 +158,6 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
 }
 
 .toDoListCreationFieldHeader {
-
   padding: 5px;
 }
 
@@ -201,7 +212,7 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
 .checkBoxFlex {
   display: flex;
 	flex-direction: row;
-  justify-content:space-between;
+  justify-content: space-between;
   align-items: center;
   width: 200px;
 }
@@ -213,4 +224,51 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
 .checkBoxFlex {
   font-size: 16px;
   color: black;
+}
+
+.basicToDoListContainer {
+  display: flex;
+	flex-direction: column;
+  justify-content:flex-start;
+  align-items: center;
+  width: 80%;
+  min-width: 620px;
+  min-height: 500px;
+  background-image: url('../public/emptytodolist.jpg');
+  background-repeat: no-repeat;
+  background-size: contain, cover;
+  background-position: center;
+  border-radius: 10px;
+  border: solid 1.5em rgba(#000, .2);
+  position: relative;
+  left: 10%;
+}
+
+.basicToDoList {
+  display: flex;
+	flex-direction: column;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.basicToDoList h3{
+  font-size: 30px;
+}
+
+.basicToDoList {
+  font-size: 20px;
+}
+
+.basicToDo {
+  display: flex;
+	flex-direction: row;
+  justify-content: space-between;
+  min-width: 250px;
+  width: 400px;
+  word-wrap: break-word;
+  margin-bottom: 5px;
+}
+
+.basicToDo span:hover {
+  cursor: pointer;
 }

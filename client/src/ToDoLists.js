@@ -1,12 +1,14 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-
+import { useHistory } from "react-router-dom";
 
 export default function ToDoLists() {
   const [ toDoLists, setToDoLists ] = useState([]);
   const [ toDoListName, setToDoListName ] = useState("");
   const [ message, setMessage] = useState("");
 
+  const history = useHistory();
+  const toDoListNameRef = useRef();
 
   useEffect(() => {
       fetch("/getToDoLists", {
@@ -53,11 +55,16 @@ export default function ToDoLists() {
                 if (data.success) {
                     console.log("To-Do list successfully created");
                     setToDoLists([data.newToDoList, ...toDoLists]);
+                    toDoListNameRef.current.value = null;
                 }
             });
     }
     
   }
+
+  const openToDoList = (basictodolist_name) => {
+      history.push(`/todolists/${basictodolist_name}`);
+  };
 
   return (
       <div>
@@ -87,6 +94,7 @@ export default function ToDoLists() {
                           name="todolistname"
                           placeholder="Give your list a name"
                           required
+                          ref={toDoListNameRef}
                           onChange={(e) => setToDoListName(e.target.value)}
                       />
 
@@ -125,11 +133,15 @@ export default function ToDoLists() {
 
           <div className="appFields">
               {toDoLists.map((toDoList) => (
-                  <div class="appField" key={toDoList.id}>
-                      <div class="appField_image">
+                  <div
+                      className="appField"
+                      key={toDoList.id}
+                      onClick={() => openToDoList(toDoList.basictodolist_name)}
+                  >
+                      <div className="appField_image">
                           <img src="/basictodolist.jpg" alt="pomodoro" />
                       </div>
-                      <div class="appField_title title-black">
+                      <div className="appField_title title-black">
                           <p> {toDoList.basictodolist_name} </p>
                       </div>
                   </div>

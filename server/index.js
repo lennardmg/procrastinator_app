@@ -7,7 +7,17 @@ const bcrypt = require("bcryptjs");
 app.use(express.json());
 
 const { authenticate } = require("../functions");
-const { insertUser, findUserByEmail, createBasicToDoList, getBasicToDos, addBasicToDo, getToDoLists } = require("../db");
+const {
+    insertUser,
+    findUserByEmail,
+    createBasicToDoList,
+    getUserInfo,
+    getBasicToDos,
+    addBasicToDo,
+    getToDoLists,
+    changeBasicToDo,
+    deleteBasicToDo,
+} = require("../db");
 
 app.use(
     cookieSession({
@@ -83,8 +93,6 @@ app.post("/login", (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    console.log("i'm at the POST login on the server");
-
     findUserByEmail(email)
         .then((user) => {
 
@@ -97,7 +105,7 @@ app.post("/login", (req, res) => {
             }
 
             const userInfo = user[0];
-            console.log("user data: in findUserByEmail ", userInfo);
+            // console.log("user data: in findUserByEmail ", userInfo);
 
             authenticate(password, user[0].password)
                 .then((result) => {
@@ -136,6 +144,17 @@ app.post("/login", (req, res) => {
         });
 });
 
+app.get("/getUserInfo", (req, res) => {
+    
+    getUserInfo(req.session.userId)
+    .then((userInfo) => {
+        res.json({
+            success: true,
+            userInfo,
+        });
+    });
+});
+
 app.get("/logout", (req, res) => {
     req.session = null;
     res.json({
@@ -150,7 +169,7 @@ app.get("/getToDoLists", function (req, res) {
     getToDoLists(req.session.userId)
     .then((toDoLists) => {
 
-        console.log("toDoLists in /getToDoLists: ", toDoLists);
+        // console.log("toDoLists in /getToDoLists: ", toDoLists);
 
         if (toDoLists.length > 0) {
             res.json({
@@ -172,7 +191,7 @@ app.post("/createBasicToDoList", function (req, res) {
     createBasicToDoList(req.session.userId, req.body.basictodolist_name)
     .then(
         (data) => {
-            console.log("data in /createBasicToDoList: ", data);
+            // console.log("data in /createBasicToDoList: ", data);
 
             let newToDoList = data[0];
 
@@ -185,6 +204,67 @@ app.post("/createBasicToDoList", function (req, res) {
 });
 
 
+app.get("/todolists/:basictodolist_name", function (req, res) {
+    let basictodolist_name = req.params.basictodolist_name;
+
+    // console.log("params on server: ", req.params);
+
+    getBasicToDos(req.session.userId, basictodolist_name)
+    .then((toDoListData) => {
+        // console.log("toDoListData in getBasicToDos on server", toDoListData);
+
+        res.json({
+            success: true,
+            toDoListData,
+        });
+    });
+});
+
+
+app.post("/todolists/add/:basictodolist_name", function (req, res) {
+    let basictodolist_name = req.params.basictodolist_name;
+    let basictodo_name = req.body.basictodo_name;
+    
+    addBasicToDo(basictodo_name, req.session.userId, basictodolist_name)
+    .then((data) => {
+                let newBasicToDoItem = data[0];
+
+                console.log("addBasicToDo successful: ", newBasicToDoItem);
+                res.json({
+                    success: true,
+                    newBasicToDoItem,
+                });
+                return;
+    })
+});
+
+app.post("/todolists/change/:basictodolist_name", function (req, res) {
+    // let basictodolist_name = req.params.basictodolist_name;
+    let id = req.body.id;
+
+    changeBasicToDo(id)
+    .then((data) => {
+
+        // console.log("changeBasicToDo successful: ", data);
+        res.json({
+            success: true,
+        });
+        return;
+    });
+});
+
+app.post("/todolists/delete/:basictodolist_name", function (req, res) {
+    // let basictodolist_name = req.params.basictodolist_name;
+    let id = req.body.id;
+
+    deleteBasicToDo(id).then((data) => {
+        console.log("deleteBasicToDo successful: ", data);
+        res.json({
+            success: true,
+        });
+        return;
+    });
+});
 
 ////////////////////////////////////////////////////////////////////
 app.listen(PORT, () => {

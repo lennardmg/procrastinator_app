@@ -22,23 +22,23 @@ function StartPage() {
                 <div className="leftSideStartPage"></div>
                 <div className="rightSideStartPage">
                     <div className="startPageFields">
-                        <div class="startPageField" onClick={togglePopUpLogIn}>
-                            <div class="startPageField_image">
+                        <div className="startPageField" onClick={togglePopUpLogIn}>
+                            <div className="startPageField_image">
                                 <img src="/login.jpg" alt="login" />
                             </div>
-                            <div class="startPageField_title title-black">
+                            <div className="startPageField_title title-black">
                                 <p> Log in </p>
                             </div>
                         </div>
 
                         <div
-                            class="startPageField"
+                            className="startPageField"
                             onClick={togglePopUpRegister}
                         >
-                            <div class="startPageField_image">
+                            <div className="startPageField_image">
                                 <img src="/register.jpg" alt="register" />
                             </div>
-                            <div class="startPageField_title title-black">
+                            <div className="startPageField_title title-black">
                                 <p> Register </p>
                             </div>
                         </div>

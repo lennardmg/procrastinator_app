@@ -24,6 +24,15 @@ module.exports.findUserByEmail = function (email) {
         .then((result) => result.rows);
 };
 
+module.exports.getUserInfo = function (id) {
+    const sql = `
+        SELECT * FROM users WHERE id= $1;
+    `;
+    return db
+        .query(sql, [id])
+        .then((result) => result.rows)
+        .catch((err) => {console.log("error in getUserInfo: ", err)});
+};
 
 /////////////////////////////////////////////////////////////////////////////////////////
 
@@ -52,7 +61,8 @@ module.exports.getToDoLists = function (creator_id) {
 
 module.exports.getBasicToDos = function (creator_id, basictodolist_name) {
     const sql = `
-        SELECT * FROM basictodos WHERE (creator_id = $1 AND basictodolist_name = $2);
+        SELECT * FROM basictodos WHERE (creator_id = $1 AND basictodolist_name = $2)
+        ORDER BY created_at DESC;
     `;
     return db
         .query(sql, [creator_id, basictodolist_name])
@@ -60,15 +70,44 @@ module.exports.getBasicToDos = function (creator_id, basictodolist_name) {
         .catch((err) => {console.log("error in getBasicToDos: ", err)});
 };
 
-module.exports.addBasicToDo = function (todo_name, creator_id, basictodolist_name) {
+module.exports.addBasicToDo = function (basictodo_name, creator_id, basictodolist_name) {
     const sql = `
-        INSERT INTO basictodos (todo_name) VALUES ($1)
-        WHERE (creator_id = $2 AND basictodolist_name = $3);
+        INSERT INTO basictodos (basictodo_name, creator_id, basictodolist_name) VALUES ($1, $2, $3)
+        RETURNING *;
     `;
     return db
-    .query(sql, [todo_name, creator_id, basictodolist_name])
-    .then((result) => result.rows)
-    .catch((err) => {console.log("error in addBasicToDo: ", err);});
+        .query(sql, [basictodo_name, creator_id, basictodolist_name])
+        .then((result) => result.rows)
+        .catch((err) => {
+            console.log("error in addBasicToDo: ", err);
+        });
+};
+
+module.exports.changeBasicToDo = function (id) {
+    const sql = `
+    UPDATE basictodos SET completed = NOT completed
+    WHERE id = $1
+    RETURNING *;
+    `;
+    return db
+        .query(sql, [id])
+        .then((result) => result.rows)
+        .catch((err) => {
+            console.log("error in addBasicToDo: ", err);
+        });
+};
+
+module.exports.deleteBasicToDo = function (id) {
+    const sql = `
+        DELETE FROM basictodos
+        WHERE id = $1; 
+    `;
+    return db
+        .query(sql, [id])
+        .then((result) => result.rows)
+        .catch((err) => {
+            console.log("error in deleteBasicToDo: ", err);
+        });
 };
 
 /////////////////////////////////////////////////////////////////////////////////////////

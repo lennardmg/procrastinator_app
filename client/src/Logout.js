@@ -24,16 +24,8 @@ export default function Logout() {
 
   return (
       <button className="logOutField" onClick={logOut}>
-          <img
-              src="/logout.png"
-              alt="logout button"
-              style={{
-                  height: "20px",
-                  width: "20px",
-                  backgroundColor: "none",
-              }}
-          ></img>
-          &nbsp; Log-Out
+    
+          &nbsp;Log-Out
       </button>
   );
 }

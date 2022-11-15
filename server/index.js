@@ -17,6 +17,8 @@ const {
     getToDoLists,
     changeBasicToDo,
     deleteBasicToDo,
+    countCompletedToDos,
+    deleteBasicToDoList,
 } = require("../db");
 
 app.use(
@@ -230,8 +232,7 @@ app.get("/todolists/:basictodolist_name", function (req, res) {
                 toDoListData.splice(i, 1);
             }
         }
-        
-        console.log("toDoListData in getBasicToDos on server", toDoListData);
+        // console.log("toDoListData in getBasicToDos on server", toDoListData);
         
         res.json({
             success: true,
@@ -265,9 +266,10 @@ app.post("/todolists/change/:basictodolist_name", function (req, res) {
     changeBasicToDo(id)
     .then((data) => {
 
-        // console.log("changeBasicToDo successful: ", data);
+        console.log("changeBasicToDo successful: ", data);
         res.json({
             success: true,
+            data
         });
         return;
     });
@@ -279,6 +281,34 @@ app.post("/todolists/delete/:basictodolist_name", function (req, res) {
 
     deleteBasicToDo(id).then((data) => {
         console.log("deleteBasicToDo successful: ", data);
+        res.json({
+            success: true,
+        });
+        return;
+    });
+});
+
+
+app.get("/countCompletedToDos", function (req, res) {
+
+    countCompletedToDos(req.session.userId)
+    .then((data) => {
+    
+        let amount = data[0].count
+
+        res.json({
+            success: true,
+            amount,
+        });
+    });
+});
+
+
+app.post("/deleteBasicToDoList", function (req, res) {
+
+    deleteBasicToDoList(req.body.basictodolist_name, req.session.userId)
+    .then(() => {
+        console.log("ToDoList successfully deleted");
         res.json({
             success: true,
         });

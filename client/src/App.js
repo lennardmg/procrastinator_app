@@ -7,11 +7,18 @@ import ToDoLists from './ToDoLists';
 import Profilepic from './Profilepic';
 import { Route } from "react-router-dom";
 import BasicToDoList from './BasicToDoList';
+import Profile from "./Profile";
 
 export default function App() {
     const [ profileInfo, setProfileInfo ] = useState({});
+    const [ profileOpen, setProfileOpen ] = useState(false);
 
-     useEffect(() => {
+    const togglePopUpProfile = () => {
+        setProfileOpen(!profileOpen);
+    };
+
+
+    useEffect(() => {
          fetch("/getUserInfo", {
              method: "GET",
              headers: {
@@ -34,10 +41,20 @@ export default function App() {
   return (
       <div className="app">
           <header className="appHeader">
-            <div className='leftAppHeader'>
-              <Profilepic profileInfo={profileInfo} />
-              <p> Hey {profileInfo.first_name} ... </p> 
-            </div>
+              <div className="leftAppHeader" onClick={togglePopUpProfile}>
+                  <div
+                      style={{
+                          height: "60px",
+                          width: "60px",
+                          marginRight: "15px",
+                          marginBottom: "5px",
+                          cursor: "pointer"
+                      }}
+                  >
+                      <Profilepic profileInfo={profileInfo} />
+                  </div>
+                  <p> Hey {profileInfo.first_name} ... </p>
+              </div>
               <h1> GET SHIT DONE. </h1>
               <Logout />
           </header>
@@ -58,6 +75,18 @@ export default function App() {
           <Route path="/todolists/:basictodolist_name">
               <BasicToDoList />
           </Route>
+
+          {profileOpen && (
+              <>
+                  <div>
+                      <Profile
+                          togglePopUpProfile={togglePopUpProfile}
+                          profileInfo={profileInfo}
+                      />
+                  </div>
+                  <div className="greyBackground"></div>
+              </>
+          )}
 
           <footer>
               <hr />

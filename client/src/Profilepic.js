@@ -6,8 +6,8 @@ export default function Profilepic({ profileInfo }) {
             src={profileInfo.profile_pic_url}
             alt=""
             style={{
-                height: "65px",
-                width: "65px",
+                height: "100%",
+                width: "100%",
                 borderRadius: "50%",
                 border: "1px solid black",
                 margin: "3px",

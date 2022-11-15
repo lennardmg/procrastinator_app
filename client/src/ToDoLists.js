@@ -116,12 +116,22 @@ export default function ToDoLists() {
           <br />
           <br />
 
-          <h2> Your To-Do lists: </h2>
+          <h2 style={{
+                  textShadow: "5px 5px 8px #010610",
+            }}>
+              {" "}
+              Your To-Do lists:{" "}
+          </h2>
 
           {toDoLists.length === 0 && (
               <>
                   <br />
-                  <h4 style={{ fontStyle: "italic" }}>
+                  <h4
+                      style={{
+                          fontStyle: "italic",
+                          textShadow: "5px 5px 8px #010610",
+                      }}
+                  >
                       {" "}
                       You do not have any To-Do lists yet. Create one and get
                       productive!{" "}

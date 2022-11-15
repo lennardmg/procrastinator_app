@@ -110,4 +110,32 @@ module.exports.deleteBasicToDo = function (id) {
         });
 };
 
+
+module.exports.countCompletedToDos = function (creator_id) {
+    const sql = `
+        SELECT COUNT(*) FROM basictodos
+        WHERE (creator_id = $1 AND completed = 'true');
+    `;
+    return db
+        .query(sql, [creator_id])
+        .then((result) => result.rows)
+        .catch((err) => {
+            console.log("error in countCompletedToDos: ", err);
+        });
+};
+
+
+module.exports.deleteBasicToDoList = function (basictodolist_name, creator_id) {
+    const sql = `
+        DELETE FROM basictodos
+        WHERE (basictodolist_name = $1 AND creator_id = $2); 
+    `;
+    return db
+        .query(sql, [basictodolist_name, creator_id])
+        .then((result) => result.rows)
+        .catch((err) => {
+            console.log("error in deleteBasicToDoList: ", err);
+        });
+};
+
 /////////////////////////////////////////////////////////////////////////////////////////

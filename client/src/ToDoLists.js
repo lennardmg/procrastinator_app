@@ -24,7 +24,7 @@ export default function ToDoLists() {
 
             if (data.success) {
 
-              setToDoLists(data.toDoLists);
+              setToDoLists(data.uniqueToDoLists);
               return;
             } else {
               console.log("no To-Do lists to show");
@@ -59,7 +59,6 @@ export default function ToDoLists() {
                 }
             });
     }
-    
   }
 
   const openToDoList = (basictodolist_name) => {

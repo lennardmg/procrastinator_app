@@ -10,7 +10,6 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 fetch("/user/id")
     .then((res) => res.json())
     .then((data) => {
-        console.log("data in fetch at index.js: ", data);
 
         if (!data.userId) {
      root.render(

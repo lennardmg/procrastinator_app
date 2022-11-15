@@ -172,9 +172,22 @@ app.get("/getToDoLists", function (req, res) {
         // console.log("toDoLists in /getToDoLists: ", toDoLists);
 
         if (toDoLists.length > 0) {
+
+            // to filter out doublicate results because of several entries for the same To-Do List name
+           const unique = [];
+
+           const uniqueToDoLists = toDoLists.filter((element) => {
+               const isDuplicate = unique.includes(element.basictodolist_name);
+               if (!isDuplicate) {
+                   unique.push(element.basictodolist_name);
+                   return true;
+               }
+               return false;
+           });
+
             res.json({
                 success: true,
-                toDoLists
+                uniqueToDoLists,
             });
             return
         } 
@@ -211,8 +224,15 @@ app.get("/todolists/:basictodolist_name", function (req, res) {
 
     getBasicToDos(req.session.userId, basictodolist_name)
     .then((toDoListData) => {
-        // console.log("toDoListData in getBasicToDos on server", toDoListData);
-
+        
+        for (let i = 0; i < toDoListData.length; i++) {
+            if (toDoListData[i].basictodo_name === null) {
+                toDoListData.splice(i, 1);
+            }
+        }
+        
+        console.log("toDoListData in getBasicToDos on server", toDoListData);
+        
         res.json({
             success: true,
             toDoListData,

@@ -47,8 +47,6 @@ app.post("/registration", (req, res) => {
     const email = req.body.email;
     const password = req.body.password;
 
-    console.log("i'm at the POST registration on the server");
-
     function hashing() {
         let hashedPassword = "";
 
@@ -250,7 +248,7 @@ app.post("/todolists/add/:basictodolist_name", function (req, res) {
     .then((data) => {
                 let newBasicToDoItem = data[0];
 
-                console.log("addBasicToDo successful: ", newBasicToDoItem);
+                // console.log("addBasicToDo successful: ", newBasicToDoItem);
                 res.json({
                     success: true,
                     newBasicToDoItem,
@@ -266,7 +264,7 @@ app.post("/todolists/change/:basictodolist_name", function (req, res) {
     changeBasicToDo(id)
     .then((data) => {
 
-        console.log("changeBasicToDo successful: ", data);
+        // console.log("changeBasicToDo successful: ", data);
         res.json({
             success: true,
             data
@@ -280,7 +278,7 @@ app.post("/todolists/delete/:basictodolist_name", function (req, res) {
     let id = req.body.id;
 
     deleteBasicToDo(id).then((data) => {
-        console.log("deleteBasicToDo successful: ", data);
+        // console.log("deleteBasicToDo successful: ", data);
         res.json({
             success: true,
         });
@@ -308,7 +306,7 @@ app.post("/deleteBasicToDoList", function (req, res) {
 
     deleteBasicToDoList(req.body.basictodolist_name, req.session.userId)
     .then(() => {
-        console.log("ToDoList successfully deleted");
+        // console.log("ToDoList successfully deleted");
         res.json({
             success: true,
         });

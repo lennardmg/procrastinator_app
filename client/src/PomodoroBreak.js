@@ -1,18 +1,14 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import PomodoroBreak from "./PomodoroBreak";
 
-import { createAudioBreak } from "./audiofiles";
-const createAudio = createAudioBreak();
+import { createAudioWork } from "./audiofiles";
+const createAudio = createAudioWork();
 
-
-export default function Pomodoro() {
-    const [minutes, setMinutes] = useState(25);
+export default function PomodoroBreak({ breakTime, setbreakTime }) {
+    const [minutes, setMinutes] = useState(5);
     const [seconds, setSeconds] = useState(0);
     const [pause, setPause] = useState(true);
-    const [ newMinutes, setNewMinutes ] = useState(0);
-    const [ newSeconds, setNewSeconds ] = useState(0);
-    const [breakTime, setbreakTime] = useState(false);
+    const [newMinutes, setNewMinutes] = useState(0);
+    const [newSeconds, setNewSeconds] = useState(0);
 
     // otherwise the number below 0 would only have one digit:
     function addZeros(n) {
@@ -26,7 +22,7 @@ export default function Pomodoro() {
     const resetTimer = (minutes, seconds) => {
         setMinutes(minutes);
         setSeconds(seconds);
-    }
+    };
 
     const toggleTimer = () => {
         setPause((prev) => !prev);
@@ -34,11 +30,13 @@ export default function Pomodoro() {
 
     useEffect(() => {
 
-        if (pause) {return;}
-        
+        if (pause) {
+            return;
+        }
+
         if (minutes <= 0 && seconds <= 0) {
             toggleTimer();
-            setbreakTime(true);
+            setbreakTime(false);
             createAudio.play();
             return;
         }
@@ -48,35 +46,27 @@ export default function Pomodoro() {
             setMinutes((prev) => prev - 1);
         }
 
-        const timer =
-            seconds > 0 && setInterval(() => decreaseNum(), 1000);
+        const timer = seconds > 0 && setInterval(() => decreaseNum(), 1000);
 
         return () => clearInterval(timer);
-
     }, [seconds, pause, minutes]);
+
+
+    useEffect(() => {
+        if (breakTime) {
+           toggleTimer();
+           return; 
+        }
+    }, [breakTime])
+
 
     return (
         <>
-            <div>
-                <Link
-                    to="/"
-                    className="logOutField"
-                    style={{
-                        textDecoration: "none",
-                        top: "20px",
-                        left: "0px",
-                        position: "relative",
-                    }}
-                >
-                    {" << "}
-                    Back{" "}
-                </Link>
-            </div>
-
-            <h2> Time for your task: </h2>
+            <h2> Time for a break: </h2>
             <br />
 
             <div className="bigTimer">
+                
                 <div className="timer">
                     {addZeros(minutes)}:{addZeros(seconds)}
                 </div>
@@ -110,14 +100,6 @@ export default function Pomodoro() {
                     {" "}
                     Reset{" "}
                 </button>
-
-                <br />
-                <br />
-
-                <PomodoroBreak
-                    breakTime={breakTime}
-                    setbreakTime={setbreakTime}
-                />
             </div>
         </>
     );

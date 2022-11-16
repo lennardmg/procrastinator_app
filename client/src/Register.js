@@ -64,7 +64,7 @@ export default function Register({ togglePopUpRegister }) {
                     >
                         x
                     </p>
-                    <h2>Sign Up here:</h2>
+                    <h2>Sign-Up here:</h2>
                 </div>
                 
                 <form

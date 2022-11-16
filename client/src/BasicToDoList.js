@@ -2,9 +2,8 @@ import React, { useState, useRef, useEffect } from 'react'
 import { useParams, Link } from "react-router-dom";
 import BasicToDoListItems from './BasicToDoListItems';
 // import { v4 as uuidv4 } from "uuid";
-import getAudio from "./audiofiles";
+import { createAudioToDo } from "./audiofiles";
 import { useHistory } from "react-router-dom";
-
 
 
 export default function BasicToDoList() {
@@ -61,7 +60,7 @@ export default function BasicToDoList() {
     const toggleToDo = (id) => {
 
         let toDoIdToChange = id;
-        const createAudio = getAudio();
+        const createAudio = createAudioToDo();
 
         fetch(`/todolists/change/${params.basictodolist_name}`, {
             method: "POST",
@@ -154,12 +153,8 @@ export default function BasicToDoList() {
                   placeholder="Add a To-Do item"
               ></input>
               <button onClick={addToDo}> Add To-Do </button>
-              {/* <button onClick={clearToDo}> Clear ToDo </button> */}
           </form>
-          {/* <div>
-                  {" "}
-                  {toDos.filter((toDo) => !toDo.completed).length} left to do{" "}
-              </div> */}
+
           <br></br>
 
           <div className="basicToDoListContainer">

@@ -88,9 +88,11 @@ export default function Profile({ togglePopUpProfile, profileInfo }) {
                     </strong>{" "}
                     tasks/To-Do's! <br />
                     <br />
+
                     {(completedToDos == 0 || completedToDos == null) && (
                         <span> Common, get some shit done! </span>
                     )}
+                    
                     {completedToDos > 0 && (
                         <span> Keep up the good work! </span>
                     )}

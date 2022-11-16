@@ -7,10 +7,10 @@
 .startPage {
     background-image: url('../public/Background.jpg');
     min-height: 100vh;
-    background-position: center;
+    background-position: 0 35%;
     background-repeat: no-repeat;
     background-attachment: scroll;
-    background-size:cover;
+    background-size: cover;
 }
 
 .startPageFlex {

@@ -5,13 +5,12 @@ import PomodoroBreak from "./PomodoroBreak";
 import { createAudioBreak } from "./audiofiles";
 const createAudio = createAudioBreak();
 
-
 export default function Pomodoro() {
     const [minutes, setMinutes] = useState(25);
     const [seconds, setSeconds] = useState(0);
     const [pause, setPause] = useState(true);
-    const [ newMinutes, setNewMinutes ] = useState(0);
-    const [ newSeconds, setNewSeconds ] = useState(0);
+    const [newMinutes, setNewMinutes] = useState(0);
+    const [newSeconds, setNewSeconds] = useState(0);
     const [breakTime, setbreakTime] = useState(false);
 
     // otherwise the number below 0 would only have one digit:
@@ -26,16 +25,17 @@ export default function Pomodoro() {
     const resetTimer = (minutes, seconds) => {
         setMinutes(minutes);
         setSeconds(seconds);
-    }
+    };
 
     const toggleTimer = () => {
         setPause((prev) => !prev);
     };
 
     useEffect(() => {
+        if (pause) {
+            return;
+        }
 
-        if (pause) {return;}
-        
         if (minutes <= 0 && seconds <= 0) {
             toggleTimer();
             setbreakTime(true);
@@ -48,11 +48,9 @@ export default function Pomodoro() {
             setMinutes((prev) => prev - 1);
         }
 
-        const timer =
-            seconds > 0 && setInterval(() => decreaseNum(), 1000);
+        const timer = seconds > 0 && setInterval(() => decreaseNum(), 1000);
 
         return () => clearInterval(timer);
-
     }, [seconds, pause, minutes]);
 
     return (
@@ -73,43 +71,90 @@ export default function Pomodoro() {
                 </Link>
             </div>
 
-            <h2> Time for your task: </h2>
-            <br />
-
             <div className="bigTimer">
-                <div className="timer">
-                    {addZeros(minutes)}:{addZeros(seconds)}
-                </div>
+                {breakTime === false && (
+                    <div className="bigTimerComponent pomodoroBackground">
+                        <h1> Time for your task: </h1>
+                        <br />
+                        <div className="timer">
+                            {addZeros(minutes)}:{addZeros(seconds)}
+                        </div>
 
-                <button onClick={toggleTimer}>
-                    {pause ? "Start" : "Pause"}
-                </button>
+                        <button onClick={toggleTimer}>
+                            {pause ? "▶ Start" : "|| Pause"}
+                        </button>
 
-                <div>
-                    <input
-                        className="setNetTimeField"
-                        name="number"
-                        type="number"
-                        min="0"
-                        max="60"
-                        placeholder={addZeros(newMinutes)}
-                        onChange={(e) => setNewMinutes(e.target.value)}
-                    ></input>
-                    <span>:</span>
-                    <input
-                        className="setNetTimeField"
-                        name="number"
-                        type="number"
-                        min="0"
-                        max="59"
-                        placeholder={addZeros(newSeconds)}
-                        onChange={(e) => setNewSeconds(e.target.value)}
-                    ></input>
-                </div>
-                <button onClick={() => resetTimer(newMinutes, newSeconds)}>
-                    {" "}
-                    Reset{" "}
-                </button>
+                        <div>
+                            <input
+                                className="setNetTimeField"
+                                name="number"
+                                type="number"
+                                min="0"
+                                max="60"
+                                placeholder={addZeros(newMinutes)}
+                                onChange={(e) => setNewMinutes(e.target.value)}
+                            ></input>
+                            <span>:</span>
+                            <input
+                                className="setNetTimeField"
+                                name="number"
+                                type="number"
+                                min="0"
+                                max="59"
+                                placeholder={addZeros(newSeconds)}
+                                onChange={(e) => setNewSeconds(e.target.value)}
+                            ></input>
+                        </div>
+                        <button
+                            onClick={() => resetTimer(newMinutes, newSeconds)}
+                        >
+                            {" "}
+                            ⟳ Reset{" "}
+                        </button>
+                    </div>
+                )}
+
+                {breakTime === true && (
+                    <div className="bigTimerComponent">
+                        <h1> Time for your task: </h1>
+                        <br />
+                        <div className="timer">
+                            {addZeros(minutes)}:{addZeros(seconds)}
+                        </div>
+
+                        <button onClick={toggleTimer}>
+                            {pause ? "▶ Start" : "|| Pause"}
+                        </button>
+
+                        <div>
+                            <input
+                                className="setNetTimeField"
+                                name="number"
+                                type="number"
+                                min="0"
+                                max="60"
+                                placeholder={addZeros(newMinutes)}
+                                onChange={(e) => setNewMinutes(e.target.value)}
+                            ></input>
+                            <span>:</span>
+                            <input
+                                className="setNetTimeField"
+                                name="number"
+                                type="number"
+                                min="0"
+                                max="59"
+                                placeholder={addZeros(newSeconds)}
+                                onChange={(e) => setNewSeconds(e.target.value)}
+                            ></input>
+                        </div>
+                        <button
+                            onClick={() => resetTimer(newMinutes, newSeconds)}
+                        >
+                            {" "}
+                            ⟳ Reset{" "}
+                        </button>
+                    </div>
+                )}
 
                 <br />
                 <br />

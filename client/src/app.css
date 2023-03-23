@@ -49,10 +49,10 @@ footer {
 
 .logOutField {
   --b: 3px;
-  --s: .45em; 
+  --s: .45em;
   --color: #010610;
   margin: 5px;
-  
+
   padding: calc(.5em + var(--s)) calc(.9em + var(--s));
   color: var(--color);
   --_p: var(--s);
@@ -132,7 +132,7 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
 
 .appField:hover {
   transform: scale(0.9, 0.9);
-  box-shadow: 5px 5px 30px 15px rgba(0,0,0,0.25), 
+  box-shadow: 5px 5px 30px 15px rgba(0,0,0,0.25),
     -5px -5px 30px 15px rgba(0,0,0,0.22);
 }
 
@@ -310,7 +310,7 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
 	border-radius: 10px;
 	box-shadow: 0 5px 50px rgba(0,0,0,0.4);
 	text-align: center;
-	min-width: 350px;
+	min-width: 370px;
 }
 
 
@@ -329,13 +329,25 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
 
 .bigTimer {
   display: flex;
-	flex-direction: column;
+	flex-direction: row;
   justify-content: center;
   align-items: center;
 }
 
-.bigTimer button{
-  width: 100px;
+.bigTimerComponent {
+  display: flex;
+	flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 30px;
+}
+
+.pomodoroBackground {
+    background-image: url('../public/pomodorotimer.png');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: scroll;
+    background-size: cover;
 }
 
 .timer {
@@ -344,4 +356,38 @@ box-shadow: 5px 5px 30px 7px rgba(0,0,0,0.25), -5px -5px 30px 7px rgba(0,0,0,0.2
 
 .setNetTimeField {
   width: 40px;
+}
+
+.bigTimer button {
+  width: 100px;
+  height: 25px;
+  /* border-radius: 5px; */
+  font-family: "Open Sans", sans-serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-decoration: none;
+  text-transform: uppercase;
+  color: #000;
+  cursor: pointer;
+  border: 3px solid;
+  padding: 0.25em 0.5em;
+  box-shadow: 1px 1px 0px 0px, 2px 2px 0px 0px, 3px 3px 0px 0px, 4px 4px 0px 0px, 5px 5px 0px 0px;
+  position: relative;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  margin-bottom: 8px;
+  margin-top: 5px;
+}
+
+.bigTimer button:active {
+  box-shadow: 0px 0px 0px 0px;
+  top: 5px;
+  left: 5px;
+}
+
+@media (min-width: 768px) {
+  .bigTimer button {
+    padding: 0.25em 0.75em;
+  }
 }

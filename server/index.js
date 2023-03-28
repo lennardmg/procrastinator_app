@@ -5,6 +5,7 @@ const PORT = process.env.PORT || 3001;
 const app = express();
 const bcrypt = require("bcryptjs");
 app.use(express.json());
+const path = require("path");
 
 const { authenticate } = require("../functions");
 const {
@@ -313,6 +314,12 @@ app.post("/deleteBasicToDoList", function (req, res) {
         return;
     });
 });
+
+
+app.get("*", function (req, res) {
+ res.sendFile(path.join(__dirname, "../client/public", "dist", "index.html"))
+});
+
 
 ////////////////////////////////////////////////////////////////////
 app.listen(PORT, () => {

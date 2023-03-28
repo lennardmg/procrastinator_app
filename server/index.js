@@ -317,7 +317,7 @@ app.post("/deleteBasicToDoList", function (req, res) {
 
 
 app.get("*", function (req, res) {
- res.sendFile(path.join(__dirname, "../client/public", "dist", "index.html"))
+ res.sendFile(path.join(__dirname, "../client/public", "index.html"))
 });
 
 

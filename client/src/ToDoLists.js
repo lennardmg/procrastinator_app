@@ -55,7 +55,8 @@ export default function ToDoLists() {
                 if (data.success) {
                     console.log("To-Do list successfully created");
                     setToDoLists([data.newToDoList, ...toDoLists]);
-                    toDoListNameRef.current.value = null;
+                    // toDoListNameRef.current.value = null;
+                    setToDoListName("");
                 }
             });
     }
@@ -93,7 +94,8 @@ export default function ToDoLists() {
                           name="todolistname"
                           placeholder="Give your list a name"
                           required
-                          ref={toDoListNameRef}
+                        //   ref={toDoListNameRef}
+                        value={toDoListName}
                           onChange={(e) => setToDoListName(e.target.value)}
                       />
 

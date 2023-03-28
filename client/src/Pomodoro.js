@@ -49,6 +49,8 @@ export default function Pomodoro() {
         }
 
         const timer = seconds > 0 && setInterval(() => decreaseNum(), 1000);
+        
+        console.log(timer, "timer");
 
         return () => clearInterval(timer);
     }, [seconds, pause, minutes]);

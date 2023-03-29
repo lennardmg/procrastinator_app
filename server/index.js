@@ -7,6 +7,8 @@ const bcrypt = require("bcryptjs");
 app.use(express.json());
 const path = require("path");
 
+app.use(express.static(path.join(__dirname, "..", "client", "build")));
+
 const { authenticate } = require("../functions");
 const {
     insertUser,
@@ -316,7 +318,7 @@ app.post("/deleteBasicToDoList", function (req, res) {
 });
 
 app.get("*", function (req, res) {
- res.sendFile(path.join(__dirname, "../client/build", "index.html"))
+ res.sendFile(path.join(__dirname, "..", "client", "build", "index.html"))
 });
 
 

@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.ff063d22.css",
+    "main.js": "/static/js/main.77f5190e.js",
+    "static/media/Background.jpg": "/static/media/Background.c6e5f27bfe0c2085154b.jpg",
+    "static/media/remy_loz-3S0INpfREQc-unsplash.jpg": "/static/media/remy_loz-3S0INpfREQc-unsplash.bea7e989bd8fda172640.jpg",
+    "static/media/emptytodolist.jpg": "/static/media/emptytodolist.a4b5f1de830d8d927bc8.jpg",
+    "static/media/pomodorotimer.png": "/static/media/pomodorotimer.24eb5bfc36bbdfca83fd.png",
+    "index.html": "/index.html",
+    "main.ff063d22.css.map": "/static/css/main.ff063d22.css.map",
+    "main.77f5190e.js.map": "/static/js/main.77f5190e.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ff063d22.css",
+    "static/js/main.77f5190e.js"
+  ]
+}
